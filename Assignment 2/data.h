@@ -10,8 +10,8 @@ typedef char asset_t[MAX_FIELD_SIZE + 1];
 typedef char segside_t[MAX_FIELD_SIZE + 1];
 
 typedef struct {
-    double x;
-    double y;
+    double lat;
+    double lon;
 } point2D_t; 
 
 typedef struct {
@@ -32,6 +32,6 @@ typedef struct {
 } quadtreeNode;
 
 typedef struct {
-    point2D_t bottom_left;
-    point2D_t upper_right;
+    point2D_t bot_left;
+    point2D_t up_right;
 } rectangle2D_t;
