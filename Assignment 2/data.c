@@ -1,6 +1,6 @@
-#include "data.h"
 #include <stdio.h>
-/*struct footpath {
+#include "data.h"
+struct footpath {
     int footpath_id; // representing "key" in dictionary
     address_t address;
     clue_t clue_sa;
@@ -20,18 +20,21 @@
     coordinates_t end;
     size_t node_size;
     footpath_t *next; // pointing to the next "key"
-};*/
+};
 
 int inRectangle(point2D_t *point, rectangle2D_t *rect) {
     // Check for case where point lies on the bottom boundary, right boundary or inside the rectangle
-    if (point->lat > rect->bot_left.lat && (point->lat <= rect->up_right.lat )) {
-        if ((point->lon >= rect->bot_left.lon) && point->lon < rect->up_right.lon) {
+    if (point->lon > rect->bot_left.lon && (point->lon <= rect->up_right.lon )) {
+        if ((point->lat >= rect->bot_left.lat) && point->lat < rect->up_right.lat) {
             return 1;
         } else {
-            printf("The point is outside, on the top or left boundary\n");
+            printf("The point is outside, on the top or left boundary, inner loop\n");
             return 0;
         }  
     } else {
+        printf("The point is outside of the rectangle, outer loop\n");
         return 0;
     }
-}
+} // Functions works fine
+
+

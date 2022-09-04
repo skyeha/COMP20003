@@ -1,26 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "data.h"
-#include "data.c"
+//#include "data.c"
 
 
 int main(int argc, char * argv[]) {
-    // creae outer rectangle space
+    // check for sufficient arguments
+    if (argc != 8) {
+        printf("Insufficient arguments, please try again!\n");
+        return EXIT_FAILURE;
+    }
+    
+    // creae outer rectangle space and fill the coordinates
     rectangle2D_t rect;
     
-    // fill the coordinates for bottem left
-    rect.bot_left.lon = 144.969;
-    rect.bot_left.lat = -37.7975;
+    rect.bot_left.lon = atof(argv[4]);
+    rect.bot_left.lat = atof(argv[5]);
 
-    // fill the coordinates for upper right
-    rect.up_right.lon = 144.971;
-    rect.up_right.lat = -37.7955;
+    rect.up_right.lon = atof(argv[6]);
+    rect.up_right.lat = atof(argv[7]);
 
-    // test point;
-    point2D_t test;
-    scanf("%lf %lf", &test.lat, &test.lon);
+    // open dataset
+    FILE *data = fopen(argv[2], "r");
 
-    if (inRectangle) {
+
+    if (inRectangle(&test, &rect)) {
         printf("The point is in the rectangle!\n");
     }
+
+    fclose(data);
 }

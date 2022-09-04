@@ -13,13 +13,13 @@ typedef char asset_t[MAX_FIELD_SIZE + 1];
 typedef char segside_t[MAX_FIELD_SIZE + 1];
 
 typedef struct {
-    double lat;
-    double lon;
+    long double lon;
+    long double lat;
 } point2D_t; 
 
-/* typedef struct {
-    double lat;
-    double lon;
+typedef struct {
+    long double lon;
+    long double lat;
 } coordinates_t;
 
 typedef struct {
@@ -32,13 +32,13 @@ typedef struct {
     dataPoint_t *NW;
     dataPoint_t *NE;
     dataPoint_t *SE;
-} quadtreeNode; */
+} quadtreeNode;
 
 typedef struct {
     point2D_t bot_left;
     point2D_t up_right;
 } rectangle2D_t;
 
+// Functions prototypes
 int inRectangle(point2D_t *point, rectangle2D_t *rect);
-
 #endif
