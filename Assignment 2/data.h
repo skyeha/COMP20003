@@ -1,3 +1,6 @@
+#ifndef _DATA_H_
+#define _DATA_H_
+
 /* Declaration and definitions of constants */
 #define MAX_ROW_SIZE 512
 #define MAX_FIELD_SIZE 127
@@ -14,13 +17,13 @@ typedef struct {
     double lon;
 } point2D_t; 
 
-typedef struct {
+/* typedef struct {
     double lat;
     double lon;
 } coordinates_t;
 
 typedef struct {
-    point2D *point;
+    point2D_t *point;
     footpath_t *footpath;
 } dataPoint_t;
 
@@ -29,9 +32,13 @@ typedef struct {
     dataPoint_t *NW;
     dataPoint_t *NE;
     dataPoint_t *SE;
-} quadtreeNode;
+} quadtreeNode; */
 
 typedef struct {
     point2D_t bot_left;
     point2D_t up_right;
 } rectangle2D_t;
+
+int inRectangle(point2D_t *point, rectangle2D_t *rect);
+
+#endif
