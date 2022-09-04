@@ -15,5 +15,4 @@ int main(int argc, char * argv[]) {
     // fill the coordinates for upper right
     rec.up_right.lon = 144.971;
     rec.up_right.lat = -37.7955;
-
 }
