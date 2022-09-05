@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include "data.h"
+#include "read.h"
 //#include "data.c"
 
 
 int main(int argc, char * argv[]) {
     // check for sufficient arguments
-    if (argc != 8) {
-        printf("Insufficient arguments, please try again!\n");
+    if (argc != 8 || atoi(argv[1]) != 3) {
+        printf("Insufficient arguments or incorrect stage number, please try again!\n");
         return EXIT_FAILURE;
     }
     
@@ -24,10 +26,17 @@ int main(int argc, char * argv[]) {
     // open dataset
     FILE *data = fopen(argv[2], "r");
 
+    // intialise the root node for quadtree
+    quadtreeNode_t *root_node;
+    root_node = create_node();
+    assert(root_node);
 
-    if (inRectangle(&test, &rect)) {
-        printf("The point is in the rectangle!\n");
-    }
+    // skip file header
+    skip_header(data);
+    
+    // start to parse data into quadtree
+
+
 
     fclose(data);
 }

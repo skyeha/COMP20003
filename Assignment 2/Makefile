@@ -8,8 +8,8 @@ CFLAGS = -Wall -g
 OBJ = $(SRC:.c = .o)
 
 # Stage 1
-dict3: dict3.o data.o
-	gcc $(CFLAGS) -o dict3 dict3.o data.o  
+dict3: dict3.o data.o read.o
+	gcc $(CFLAGS) -o dict3 dict3.o data.o read.o 
 
 # Specify on how to get the .o files 
 dict3.o: dict3.c 
@@ -17,6 +17,9 @@ dict3.o: dict3.c
 
 data.o: data.c 
 	gcc -c data.c 
+
+read.o: read.c 
+	gcc -c read.c
 
 clean:
 	rm -f *.o dict3 

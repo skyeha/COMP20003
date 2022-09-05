@@ -7,6 +7,7 @@
 
 /* Declaration of data types and strcut */
 typedef struct footpath footpath_t;
+typedef struct quadtreeNode quadtreeNode_t;
 typedef char address_t[MAX_FIELD_SIZE + 1];
 typedef char clue_t[MAX_FIELD_SIZE + 1];
 typedef char asset_t[MAX_FIELD_SIZE + 1];
@@ -18,21 +19,10 @@ typedef struct {
 } point2D_t; 
 
 typedef struct {
-    long double lon;
-    long double lat;
-} coordinates_t;
-
-typedef struct {
     point2D_t *point;
     footpath_t *footpath;
+    quadtreeNode_t *original;
 } dataPoint_t;
-
-typedef struct {
-    dataPoint_t *SW;
-    dataPoint_t *NW;
-    dataPoint_t *NE;
-    dataPoint_t *SE;
-} quadtreeNode;
 
 typedef struct {
     point2D_t bot_left;
@@ -41,4 +31,6 @@ typedef struct {
 
 // Functions prototypes
 int inRectangle(point2D_t *point, rectangle2D_t *rect);
+quadtreeNode_t *create_node(void);
+
 #endif
