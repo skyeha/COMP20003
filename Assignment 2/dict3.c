@@ -7,6 +7,7 @@
 //#include "data.c"
 
 
+
 int main(int argc, char * argv[]) {
     // check for sufficient arguments
     if (argc != 8 || atoi(argv[1]) != 3) {
@@ -28,15 +29,13 @@ int main(int argc, char * argv[]) {
 
     // intialise the root node for quadtree
     quadtreeNode_t *root_node;
-    root_node = create_node();
+    root_node = create_node(argv[], ROOT_NODE);
     assert(root_node);
 
     // skip file header
     skip_header(data);
     
     // start to parse data into quadtree
-
-
 
     fclose(data);
 }

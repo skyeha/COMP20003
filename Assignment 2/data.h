@@ -4,6 +4,15 @@
 /* Declaration and definitions of constants */
 #define MAX_ROW_SIZE 512
 #define MAX_FIELD_SIZE 127
+#define NOT_ROOT 0
+#define ROOT_NODE 1
+#define INT_NODE 2
+
+#define S_WEST 0
+#define N_WEST 1
+#define N_EAST 2
+#define S_EAST 3
+
 
 /* Declaration of data types and strcut */
 typedef struct footpath footpath_t;
@@ -19,15 +28,16 @@ typedef struct {
 } point2D_t; 
 
 typedef struct {
-    point2D_t *point;
+    point2D_t *location;
     footpath_t *footpath;
-    quadtreeNode_t *original;
 } dataPoint_t;
 
 typedef struct {
     point2D_t bot_left;
     point2D_t up_right;
 } rectangle2D_t;
+
+
 
 // Functions prototypes
 int inRectangle(point2D_t *point, rectangle2D_t *rect);
