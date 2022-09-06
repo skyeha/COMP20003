@@ -23,18 +23,18 @@ typedef char asset_t[MAX_FIELD_SIZE + 1];
 typedef char segside_t[MAX_FIELD_SIZE + 1];
 
 typedef struct {
-    long double lon;
-    long double lat;
+    long double x;
+    long double y;
 } point2D_t; 
 
 typedef struct {
-    point2D_t *location;
+    point2D_t location;
     footpath_t *footpath;
 } dataPoint_t;
 
 typedef struct {
-    point2D_t bot_left;
-    point2D_t up_right;
+    point2D_t botLeft;
+    point2D_t upRight;
 } rectangle2D_t;
 
 

@@ -16,24 +16,25 @@ int main(int argc, char * argv[]) {
     }
     
     // creae outer rectangle space and fill the coordinates
-    rectangle2D_t rect;
+    rectangle2D_t bigRect;
     
-    rect.bot_left.lon = atof(argv[4]);
-    rect.bot_left.lat = atof(argv[5]);
+    bigRect.botLeft.x = atof(argv[4]);
+    bigRect.botLeft.y = atof(argv[5]);
 
-    rect.up_right.lon = atof(argv[6]);
-    rect.up_right.lat = atof(argv[7]);
+    bigRect.upRight.x = atof(argv[6]);
+    bigRect.upRight.y = atof(argv[7]);
 
     // open dataset
     FILE *data = fopen(argv[2], "r");
 
     // intialise the root node for quadtree
-    quadtreeNode_t *root_node;
-    root_node = create_node(argv[], ROOT_NODE);
-    assert(root_node);
+    quadtreeNode_t *root;
+    root = create_node(bigRect);
+    assert(root);
 
     // skip file header
     skip_header(data);
+    read_data(data, root);
     
     // start to parse data into quadtree
 

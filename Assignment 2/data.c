@@ -31,11 +31,12 @@ struct quadtreeNode {
     dataPoint_t *point;
     int num_point; // keeping track of how many points inside the node
 
-    // If num_point > 1, the pointer will be point to address, otherwise, it will point to null.
+    // If num_point > 1, the pointer to quadrant will be pointing to address, otherwise, point to null.
     quadtreeNode_t *SW;
     quadtreeNode_t *NW;
     quadtreeNode_t *NE;
     quadtreeNode_t *SE;
+
     quadtreeNode_t *origin; // point back to the internal node
     quadtreeNode_t *root; // point back to the very root node
 };
@@ -60,7 +61,7 @@ quadtreeNode_t *create_node(char *argv[], int root) {
     node->SW = NULL;
     node->SE = NULL;
     node->origin = NULL;
-    node->root = node;
+    node->root = NULL;
 
     return node;
 }
@@ -75,6 +76,7 @@ void addPoint(quadtreeNode_t *node, FILE* file_in) {
     } else if (node->num_point == 1) {
         // need to split into four quadrant
         // insert quadrant split function
+        split_quadrant(); 
     }
 }
 
@@ -82,17 +84,17 @@ void split_quadrant(quadtreeNode_t *node) {
     if (which_quad == S_WEST) {
         node->SW->point = malloc(sizeof(dataPoint_t));
         node->SW->num_point = 1;
-        node->SW->origin = node;
+        //node->SW->origin = node;
         node->point = NULL; // as the root node no longer point to one datapoint
     } else if (which_quad == N_WEST) {
         node->NW->point = malloc(sizeof(dataPoint_t));
         node->NW->num_point = 1;
-        node->NW->origin = node;
+        //node->NW->origin = node;
         node->point = NULL;
     } else if (which_quad == N_EAST) {
         node->NE->point = malloc(sizeof(dataPoint_t));
         node->NE->num_point = 1;
-        node->NE->origin = node;
+        //node->NE->origin = node;
         node->point = NULL;
     } else if (which_quad == S_EAST) {
         node->SE->point = malloc(sizeof(dataPoint_t))
