@@ -29,7 +29,7 @@ int main(int argc, char * argv[]) {
 
     // intialise the root node for quadtree
     quadtreeNode_t *root;
-    root = create_node(bigRect);
+    root = create_node(&bigRect);
     assert(root);
 
     // skip file header

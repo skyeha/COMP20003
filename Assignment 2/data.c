@@ -91,19 +91,19 @@ void split_quadrant(quadtreeNode_t *node) {
         node->NW->num_point = 1;
         //node->NW->origin = node;
         node->point = NULL;
-    } else if (which_quad == N_EAST) {
-        node->NE->point = malloc(sizeof(dataPoint_t));
-        node->NE->num_point = 1;
-        //node->NE->origin = node;
-        node->point = NULL;
-    } else if (which_quad == S_EAST) {
-        node->SE->point = malloc(sizeof(dataPoint_t))
-        node->NE->num_point = 1;
-        node->NE->origin = 1;
-        node->point = NULL;
-    }
+        } else if (which_quad == N_EAST) {
+            node->NE->point = malloc(sizeof(dataPoint_t));
+            node->NE->num_point = 1;
+            //node->NE->origin = node;
+            node->point = NULL;
+        } else if (which_quad == S_EAST) {
+            node->SE->point = malloc(sizeof(dataPoint_t))
+            node->NE->num_point = 1;
+            node->NE->origin = 1;
+            node->point = NULL;
+        }
 
-}
+    }
 int which_quad(quadtreeNode_t *node, dataPoint_t *point) {
     long double mid_lon = (node->rect.bot_left.lon + node->rect.up_right.lon) / 2;
     long double mid_lat = (node->rect.bot_left.lat + node->rect.up_right.lat) / 2;

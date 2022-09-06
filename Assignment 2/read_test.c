@@ -11,7 +11,7 @@ void *read_data(FILE* file, quadtreeNode_t *node) {
     char buff[MAX_ROW_SIZE + 1];
     char *record,
          *token;
-    footpath_t current;
+    footpath_t *current;
     while (fgets(buff, MAX_ROW_SIZE, file) != NULL) {
         record = strdup(buff);
         char *dup_str_addr = record;
@@ -31,7 +31,12 @@ void *read_data(FILE* file, quadtreeNode_t *node) {
             token = strsep(&record, ",");
             current->end.lon = atof(token);
         }
-        if (inRectangle(current))
+        if (inRectangle(&(current.start), node->rect)) {
+            addPoint();
+        }
+        if (inRectangle(&(current.end), node->rect)) {
+            addPoint();
+        }
 
         
         free(dup_str_addr);

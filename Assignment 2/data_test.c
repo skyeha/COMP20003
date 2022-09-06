@@ -80,27 +80,27 @@ void insertPoint(quadtreeNode_t *root, point2D_t *point) {
         if (point->y < midY) {
             if (root->SW == NULL) {
                 root->SW = create_node();
-                insertPoint(root->SW, point);
             }
+            insertPoint(root->SW, point);
         } else if (midY <= point->y) {
             if (root->NW == NULL) {
-                insertPoint(root->NW, point);
+                root->NW = create_node();
             }
+            insertPoint(root->NW, point);
         }
     } else if (point->x > midX) {
         if (point->y < midY) {
             if (root->SE == NULL) {
                 root->SE = create_node();
-                insertPoint(root->SE, point);
             }
+            insertPoint(root->SE, point);
         } else if (midY <= point->y) {
             if (root->NE == NULL) {
                 root->NE = create_node();
-                insertPoint(root->SE, point);
             }
+            insertPoint(root->NE, point);
         }
     }
-    insertPoint(root, root->point);
 }
 
 int whichQuad(quadtreeNode_t *node, dataPoint_t *point) {
