@@ -1,91 +1,92 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "read.h"
-// skip header line
-void skip_header(FILE *file_in) {
+#include "data.h"
+#include "data_test.c"
+
+/* both of these code where taken from Assignment 1 of COMP20003 with little modifications to suit this assignment */
+void skipHeader(FILE *file_in) {
     while(fgetc(file_in) != '\n');
 } 
 
-void *read_data(FILE* file) {
+void readData(FILE* file, quadtreeNode_t *root) {
     char buff[MAX_ROW_SIZE + 1];
     char *record,
          *token;
     footpath_t current;
     while (fgets(buff, MAX_ROW_SIZE, file) != NULL) {
-        assert(current);
-        
         record = strdup(buff);
-        
-        // temporary store memory allocated by strdup above
-        // since strsep will make record become null
         char *dup_str_addr = record;
         //printf("record before: %s\n", record);
         while ((token = strsep(&record, ",")) != NULL) {
-            current->footpathID = atoi(token);
-
+            current.footpath_id = atoi(token);
+            
             token = strsep(&record, ",");
-            strcpy(current->address, token);
+            strcpy(current.address, token);
             
             // special cases for "abc, def" in Clue
             token = strsep(&record, ",");
             if (strchr(token, ASCII_VALUE_QUOTE) != 0) {
-                strcpy(current->clue, &token[1]);
+                strcpy(current.clue_sa, &token[1]);
                 token = strsep(&record, ",");
-                strcat(current->clue, ",");
+                strcat(current.clue_sa, ",");
                 //int token_len = strlen(token);
-                strncat(current->clue, token, strlen(token) - 1);
+                strncat(current.clue_sa, token, strlen(token) - 1);
             } else {
-                strcpy(current->clue, token);
+                strcpy(current.clue_sa, token);
             }
 
             token = strsep(&record, ",");
-            strcpy(current->asset, token);
+            strcpy(current.asset_type, token);
 
             token = strsep(&record, ",");
-            current->deltaz = atof(token);
+            current.deltaz = atof(token);
 
             token = strsep(&record, ",");
-            current->distance = atof(token);
+            current.distance = atof(token);
 
             token = strsep(&record, ",");
-            current->gradelin = atof(token);
+            current.grade1in = atof(token);
 
             token = strsep(&record, ",");
-            current->mccID = atoi(token);
+            current.mcc_id = atoi(token);
 
             token = strsep(&record, ",");
-            current->mccID_int = atoi(token);
+            current.mccid_int = atoi(token);
 
             token = strsep(&record, ",");
-            current->rlmax = atof(token);
+            current.rlmax = atof(token);
             
             token = strsep(&record, ",");
-            current->rlmin = atof(token);
+            current.rlmin = atof(token);
 
             token = strsep(&record, ",");
-            strcpy(current->segside, token);
+            strcpy(current.segside, token);
 
             token = strsep(&record, ",");
-            current->statusID = atoi(token);
+            current.status_id = atoi(token);
 
             token = strsep(&record, ",");
-            current->streetID = atoi(token);
+            current.street_id = atoi(token);
 
             token = strsep(&record, ",");
-            current->streetGroup = atoi(token);
+            current.street_group = atoi(token);
 
             token = strsep(&record, ",");
-            current->start.lat = atof(token);
+            current.start.y = atof(token);
 
             token = strsep(&record, ",");
-            current->start.lon = atof(token);
+            current.start.x = atof(token);
 
             token = strsep(&record, ",");
-            current->end.lat = atof(token);
+            current.end.y = atof(token);
 
             token = strsep(&record, ",");
-            current->end.lon = atof(token);
+            current.end.x = atof(token);
         }
+        insertPoint(root, &(current.start), &current);
+        insertPoint(root, &(current.end), &current);
         free(dup_str_addr);
     }
 }

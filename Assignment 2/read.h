@@ -1,5 +1,6 @@
 // Functions prototypes for parsing data
+#include "data.h"
 
-void skip_header(FILE* file_in);
+void skipHeader(FILE* file_in);
 
-void read_data(FILE* file_in, quadtreeNode_t *node);
+void readData(FILE* file_in, quadtreeNode_t *node);

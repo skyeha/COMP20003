@@ -2,11 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "data.h"
 #include "read.h"
-//#include "data.c"
-
-
 
 int main(int argc, char * argv[]) {
     // check for sufficient arguments
@@ -17,26 +13,53 @@ int main(int argc, char * argv[]) {
     
     // creae outer rectangle space and fill the coordinates
     rectangle2D_t bigRect;
-    
-    bigRect.botLeft.x = atof(argv[4]);
-    bigRect.botLeft.y = atof(argv[5]);
+    char value[sizeof(long double) + 1];
+    char *eptr;
+    strcpy(value, argv[4]);
+    bigRect.botLeft.x = strtold(value, &eptr);
 
-    bigRect.upRight.x = atof(argv[6]);
-    bigRect.upRight.y = atof(argv[7]);
+    strcpy(value, argv[5]);
+    bigRect.botLeft.y = strtold(value, &eptr);
+    
+    strcpy(value, argv[6]);
+    bigRect.upRight.x = strtold(value, &eptr);
+
+    strcpy(value, argv[7]);
+    bigRect.upRight.y = strtold(value, &eptr);
 
     // open dataset
-    FILE *data = fopen(argv[2], "r");
+    FILE *fileIn = fopen(argv[2], "r");
+    assert(fileIn);
 
     // intialise the root node for quadtree
     quadtreeNode_t *root;
-    root = create_node(&bigRect);
+    
+    root = createNode(&bigRect);
     assert(root);
 
     // skip file header
-    skip_header(data);
-    read_data(data, root);
+    skipHeader(fileIn);
+    readData(fileIn, root);
     
-    // start to parse data into quadtree
-
-    fclose(data);
+    coordinates_t query;
+    FILE *fileOut = fopen(argv[3], "w");
+    char buffer[MAX_ROW_SIZE + 1];
+    char *token,
+          *record;
+    while (fgets(buffer, MAX_FIELD_SIZE + 1, stdin) != NULL) {
+        buffer[strcspn(buffer,"\n")] = '\0';
+        record = strdup(buffer);
+        char *dup_str_addr = record;
+        while ((token = strsep(&record, " ")) != NULL) {
+            query.x = atof(token);
+            token = strsep(&record, " ");
+            query.y = atof(token);
+        }
+        searchPoint(&query, buffer, root, 0, fileOut);
+        free(dup_str_addr);
+    }
+    
+    freeTree(root);
+    fclose(fileIn);
+    fclose(fileOut);
 }
