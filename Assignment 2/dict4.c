@@ -49,6 +49,7 @@ int main(int argc, char * argv[]) {
           *record;
     while (fgets(buffer, MAX_FIELD_SIZE + 1, stdin) != NULL) {
         buffer[strcspn(buffer,"\n")] = '\0';
+        printf("%s\n", buffer);
         record = strdup(buffer);
         char *dup_str_addr = record;
         while ((token = strsep(&record, " ")) != NULL) {
@@ -67,7 +68,8 @@ int main(int argc, char * argv[]) {
             strcpy(value, token);
             queryUpR.y = strtold(value, &eptr);
         }
-        searchRange(&queryBotL, &queryUpR, root, buffer);
+        printf("%s\n", buffer);
+        searchRange(&queryBotL, &queryUpR, root, buffer, 1);
         free(dup_str_addr);
         return 0;
     }

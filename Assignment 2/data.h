@@ -62,7 +62,7 @@ dictionary_t *insertAtFoot(dictionary_t *dict);
 void freeDict(dictionary_t *dict);
 
 /* Stage 4 */
-void searchRange(point2D_t *queryBotL, point2D_t *queryUpR, quadtreeNode_t *root, char *buffer);
-int overlapRect(point2D_t *queryBotL, point2D_t *queryUpR, quadtreeNode_t *root);
+void searchRange(point2D_t *queryBotL, point2D_t *queryUpR, quadtreeNode_t *root, char buffer, int flag);
+int overlapRect(point2D_t *queryBotL, point2D_t *queryUpR, rectangle2D_t *rect);
 void pointInReg(quadtreeNode_t *root, int flag);
 #endif

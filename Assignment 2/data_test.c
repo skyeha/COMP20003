@@ -374,48 +374,58 @@ void searchPoint(coordinates_t *query, char *buffer, quadtreeNode_t *root, int f
 }
 
 
-void searchRange(point2D_t *queryBotL, point2D_t *queryUpR, quadtreeNode_t *root, char *buffer) {
-    // The case when the query pair overlap with the rectangle itself
-    if (overlapRect(queryBotL, queryUpR, root)) {
+void searchRange(point2D_t *queryBotL, point2D_t *queryUpR, quadtreeNode_t *root, char buffer, int flag) {
+    if (overlapRect(queryBotL, queryUpR, &(root->rect)) && flag == 1) {
         printf("%s -->", buffer);
-        pointInReg(root, 1);
+        flag = 0;
+    } else {
+        return;
     }
-
-}
-
-void pointInReg(quadtreeNode_t *root, int flag) {
-    if (flag == 1) {
-        if (root->SW != NULL) {
-            printf(" SW");
-            pointInReg(root->SW, flag);
-        }
-
-        if (root->NW != NULL) {
+    
+    if (root->NW != NULL) {
+        if (overlapRect(queryBotL, queryUpR, &(root->NW->rect))) {
             printf(" NW");
-            pointInReg(root->NW, flag);
+            searchRange(queryBotL, queryUpR, root->NW, buffer, flag);
         }
+    }
 
-        if (root->NE != NULL) {
+    if (root->NE != NULL) {
+        if (overlapRect(queryBotL, queryUpR, &(root->NE->rect))) {
             printf(" NE");
-            pointInReg(root->NE, flag);
+            searchRange(queryBotL, queryUpR, root->NE, buffer, flag);
         }
+    }
 
-        if (root->SE != NULL) {
+    if (root->SE != NULL) {
+        if (overlapRect(queryBotL, queryUpR, &(root->SE->rect))) {
             printf(" SE");
-            pointInReg(root->SE, flag);
+            searchRange(queryBotL, queryUpR, root->SE, buffer, flag);
+        }
+    }
+
+    if (root->SW != NULL) {
+        if (overlapRect(queryBotL, queryUpR, &(root->SW->rect))) {
+            printf(" SW");
+            searchRange(queryBotL, queryUpR, root->SW, buffer, flag);
         }
     }
 }
 
-int overlapRect(point2D_t *queryBotL, point2D_t *queryUpR, quadtreeNode_t *root) {
-    if (queryBotL->x >= root->rect.botLeft.x && queryBotL->y >= root->rect.botLeft.y) {
-        if (queryUpR->x >= root->rect.upRight.x && queryUpR->y >= root->rect.upRight.y) {
-            return 1;
-        }
+int overlapRect(point2D_t *queryBotL, point2D_t *queryUpR, rectangle2D_t *rect) {
+    
+    if (rect->botLeft.x > queryUpR->x || rect->upRight.x < queryBotL->x) {
+        //printf("Not overlap!\n");
+        // the rectangle do not overlap
         return 0;
     }
-    return 0;
-}
+    if (rect->botLeft.y > queryUpR->y || rect->upRight.y < queryBotL->y) {
+        // the rectangle do not overlap
+        //printf("Not overlap!\n");
+        return 0;
+    }
+    return 1;
+} 
+
 
 // printing to outFile
 void toFileOut(FILE *fileOut, footpath_t *fp) {
